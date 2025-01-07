@@ -38,7 +38,7 @@ class RAGPDFChatbot:
     def __init__(self, 
                  embedding_model_name='blevlabs/stella_en_v5', 
                  ollama_model='llama3', 
-                 qdrant_host='localhost', 
+                 qdrant_host='qdrant', 
                  qdrant_port=6333):
         """
         初始化 RAG 系統，支持多模態嵌入
@@ -115,7 +115,7 @@ class RAGPDFChatbot:
 
     def process_pdf(self, pdf_docs, collection_name="pdf_content"):
         """
-        處理 PDF 文件並存儲到 Qdrant，支援多種內容類型
+        處理 PDF 文件並存儲到 Qdrant，支援圖文類型
         """
         try:
             

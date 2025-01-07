@@ -11,12 +11,13 @@ This repository provides a Streamlit application that demonstrates a Retrieval-A
   - [Features](#features)
   - [Installation](#installation)
     - [Step 1: Clone the Repository](#step-1-clone-the-repository)
-    - [Step 2: Build docker image](#step-2-build-docker-image)
+    - [Step 2: Build docker image and create docker network](#step-2-build-docker-image-and-create-docker-network)
     - [Step 3: Install and configure Qdrant](#step-3-install-and-configure-qdrant)
     - [Step 4: Setup Ollama LLM](#step-4-setup-ollama-llm)
   - [Usage](#usage)
   - [Key Components](#key-components)
   - [How it Works](#how-it-works)
+  - [References](#references)
 
 ---
 
@@ -46,13 +47,17 @@ By leveraging CLIP embeddings for images and HuggingFace embeddings for text, th
 
 ### Step 1: Clone the Repository
 ```bash
-git clone https://github.com/your-username/pdf_chatbot.git
+git clone https://github.com/jasonghlin/pdf_chatbot.git
 cd pdf_chatbot
 ```
 
-### Step 2: Build docker image
+### Step 2: Build docker image and create docker network
 ```bash
 docker image build -t chatpdf .
+```
+
+```bash
+docker network create pdf_chatbot_network
 ```
 
 ### Step 3: Install and configure Qdrant
@@ -69,7 +74,7 @@ docker image build -t chatpdf .
 
     On Linux/Mac: 
     ```bash
-    docker container run -d -v ~/.cache:/root/.cache -p 8501:8501 chatpdf
+    docker container run -d --network pdf_chatbot_network -v ~/.cache:/root/.cache -p 8501:8501 chatpdf
     ```
     Access on http://0.0.0.0:8501
     (Be patient when start application first time, it takes time to download embedding model blevlabs/stella_en_v5)
@@ -118,3 +123,8 @@ A simple class to generate text embeddings using CLIP. This is used specifically
    * The relevant chunks are combined and sent to Ollama’s Llama3.
    * The LLM returns an answer leveraging the retrieved context.
 4. Answer and Source Documents are displayed in the Streamlit UI.
+
+## References
+
+1. https://github.com/alejandro-ao/ask-multiple-pdfs/blob/main/app.py
+2. https://github.com/Ko-Ko-Kirk/DScommunity20241017/

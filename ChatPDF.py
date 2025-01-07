@@ -38,7 +38,7 @@ class RAGPDFChatbot:
     def __init__(self, 
                  embedding_model_name='blevlabs/stella_en_v5', 
                  ollama_model='llama3', 
-                 qdrant_host='qdrant', 
+                 qdrant_host='localhost', 
                  qdrant_port=6333):
         """
         初始化 RAG 系統，支持多模態嵌入

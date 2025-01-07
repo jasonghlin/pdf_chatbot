@@ -11,7 +11,7 @@ This repository provides a Streamlit application that demonstrates a Retrieval-A
   - [Features](#features)
   - [Installation](#installation)
     - [Step 1: Clone the Repository](#step-1-clone-the-repository)
-    - [Step 2: Build docker image and create docker network](#step-2-build-docker-image-and-create-docker-network)
+    - [Step 2: Install requirements with python version 3.11](#step-2-install-requirements-with-python-version-311)
     - [Step 3: Install and configure Qdrant](#step-3-install-and-configure-qdrant)
     - [Step 4: Setup Ollama LLM](#step-4-setup-ollama-llm)
   - [Usage](#usage)
@@ -51,13 +51,9 @@ git clone https://github.com/jasonghlin/pdf_chatbot.git
 cd pdf_chatbot
 ```
 
-### Step 2: Build docker image and create docker network
+### Step 2: Install requirements with python version 3.11
 ```bash
-docker image build -t chatpdf .
-```
-
-```bash
-docker network create pdf_chatbot_network
+pip install -r requirements.txt
 ```
 
 ### Step 3: Install and configure Qdrant
@@ -70,21 +66,20 @@ docker network create pdf_chatbot_network
 
 ## Usage
 
-1.  Run container
+1.  Run streamlit
 
-    On Linux/Mac: 
-    ```bash
-    docker container run -d --network pdf_chatbot_network -v ~/.cache:/root/.cache -p 8501:8501 chatpdf
-    ```
-    Access on http://0.0.0.0:8501
-    (Be patient when start application first time, it takes time to download embedding model blevlabs/stella_en_v5)
+```bash
+streamlit run ./ChatPDF.py
+```
+Access on http://localhost:8501
+(Be patient when start application first time, it takes time to download embedding model blevlabs/stella_en_v5)
 
-2. Upload PDFs in the sidebar to process. Once processed, the text chunks, tables, and images will be embedded into Qdrant.
-3. Ask a question in the main UI text box. The system will:
+1. Upload PDFs in the sidebar to process. Once processed, the text chunks, tables, and images will be embedded into Qdrant.
+2. Ask a question in the main UI text box. The system will:
     * Retrieve relevant chunks and images from Qdrant.
     * Pass them to the LLM (Ollama Llama3) for context-augmented answer generation.
     * Display both the answer and the context documents (sources)
-4. You may need to restart Qdrant when embedding different PDFs
+3. You may need to restart Qdrant when embedding different PDFs
 
 ## Key Components
 
